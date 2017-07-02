@@ -27,6 +27,8 @@ class Player(object):
     STATUS_PLAYING = 1
     STATUS_PAUSED = 2
 
+    READ_DELAY = .1
+
     def __init__(self, port=2, volume=20):
         """
         Constructor for JQ6500.
@@ -36,8 +38,6 @@ class Player(object):
                 volume(int) : Initial volume (default: 20, range 0-30).
         """
         self.uart = UART(port, 9600)
-        # Bug in UART loses first 2 bytes
-        self.uart.write(bytes([0xEF, 0xEF]))
         self.uart.read()
         self.reset()
         self.set_volume(volume)
@@ -188,12 +188,14 @@ class Player(object):
             Method is unreliable with SD cardsself.
         """
         self.write_bytes([0x42])
+        sleep(self.READ_DELAY)
         status = self.read_bytes()
         return status
 
     def get_volume(self):
         """Get current volume level (0-30)."""
         self.write_bytes([0x43])
+        sleep(self.READ_DELAY)
         level = self.read_bytes()
         return level
 
@@ -204,6 +206,7 @@ class Player(object):
         (EQ_NORMAL, EQ_POP, EQ_ROCK, EQ_JAZZ, EQ_CLASSIC, EQ_BASS).
         """
         self.write_bytes([0x44])
+        sleep(self.READ_DELAY)
         eq = self.read_bytes()
         return eq
 
@@ -214,6 +217,7 @@ class Player(object):
         (LOOP_ALL , LOOP_FOLDER, LOOP_ONE, LOOP_RAM, LOOP_ONE_STOP, LOOP_NONE).
         """
         self.write_bytes([0x45])
+        sleep(self.READ_DELAY)
         looping = self.read_bytes()
         return looping
 
@@ -229,6 +233,7 @@ class Player(object):
         else:
             # SRC_BUILTIN
             self.write_bytes([0x49])
+        sleep(self.READ_DELAY)
         count = self.read_bytes()
         return count
 
@@ -262,23 +267,27 @@ class Player(object):
         """
         if source == self.SRC_SDCARD:
             self.write_bytes([0x4B])
+            sleep(self.READ_DELAY)
             count = self.read_bytes()
             return count
         else:
             # SRC_BUILTIN
             self.write_bytes([0x4D])
+            sleep(self.READ_DELAY)
             count = self.read_bytes()
             return count + 1
 
     def get_position(self):
         """Get current position in seconds of current file."""
         self.write_bytes([0x50])
+        sleep(self.READ_DELAY)
         position = self.read_bytes()
         return position
 
     def get_length(self):
         """Get length in seconds of current file."""
         self.write_bytes([0x51])
+        sleep(self.READ_DELAY)
         length = self.read_bytes()
         return length
 
@@ -290,11 +299,13 @@ class Player(object):
             SD card must be active source.
         """
         self.write_bytes([0x52])
+        sleep(self.READ_DELAY)
         return self.uart.read()
 
     def get_version(self):
         """Get version number."""
         self.write_bytes([0x46])
+        sleep(self.READ_DELAY)
         version = self.read_bytes()
         return version
 
