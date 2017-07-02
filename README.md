@@ -1,7 +1,7 @@
 # MicroPython JQ6500 sound module library
 ![lcd](http://www.rototron.info/wp-content/uploads/jq6500mp_01.jpg "JQ6500")
 
-A library to control a JQ6500 sound module in seral mode on an ESP32 or other compatible board running MicroPython.
+A library to control a JQ6500 sound module in serial mode on an ESP32 or other compatible board running MicroPython.
 
 Example:
 ```
