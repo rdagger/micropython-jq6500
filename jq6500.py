@@ -309,6 +309,10 @@ class Player(object):
         version = self.read_bytes()
         return version
 
+    def read_buffer(self):
+        """Return UART buffer as bytes."""
+        return self.uart.read()
+
     def read_bytes(self):
         """Return 4 bytes from UART port."""
         b = self.uart.read(4)
