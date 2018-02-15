@@ -52,6 +52,14 @@ class Player(object):
         """Play the current file."""
         self.write_bytes([0x0D])
 
+    def play_pause(self):
+        """Toggle play or pause for the current file."""
+        status = self.get_status()
+        if status == self.STATUS_PAUSED or status == self.STATUS_STOPPED:
+            self.play()
+        elif status == self.STATUS_PLAYING:
+            self.pause()
+
     def restart(self):
         """Restart current playing or paused file from the beginning."""
         old_volume = self.get_volume()
@@ -189,8 +197,12 @@ class Player(object):
         """
         self.write_bytes([0x42])
         sleep(self.READ_DELAY)
-        status = self.read_bytes()
-        return status
+        status = self.uart.read()
+        sleep(self.READ_DELAY)
+        if status.isdigit():
+            return int(status)
+        else:
+            return -1
 
     def get_volume(self):
         """Get current volume level (0-30)."""
