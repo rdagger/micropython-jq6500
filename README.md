@@ -31,6 +31,7 @@ Available methods:
 * play
 * play_by_index
 * play_by_number
+* play_pause
 * prev
 * prev_folder
 * restart
