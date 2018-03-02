@@ -42,3 +42,9 @@ Available methods:
 * sleep
 * volume_down
 * volume_up
+
+Tutorial on my website [Rototron](https://www.rototron.info/raspberry-pi-esp32-micropython-touch-sound-tutorial/) or click picture below for a YouTube video:
+
+[![JQ6500 Tutorial](http://img.youtube.com/vi/QzOkSeeqB8g/0.jpg)](https://youtu.be/QzOkSeeqB8g)
+
+_Tested on ESP32 (Wemos Lolin32)_
