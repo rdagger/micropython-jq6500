@@ -1,16 +1,17 @@
-# MicroPython JQ6500 sound module library
+# CircuitPython JQ6500 sound module library
 ![lcd](http://www.rototron.info/wp-content/uploads/jq6500mp_01.jpg "JQ6500")
 
-A library to control a JQ6500 sound module in serial mode on an ESP32 or other compatible board running MicroPython.
+A library to control a JQ6500 sound module in serial mode on an board running CircuitPython.
 
 Example:
 ```
+import board
 from jq6500 import Player
-p = Player(port=2)
-p.set_volume(30)
+p = Player(board.TX, board.RX, 30)
 p.play()
 p.get_length()
-p.clean_up()
+p.clean_up()# Ecrit ton programme ici ;-)
+
 ```
 
 Available methods:
@@ -46,5 +47,3 @@ Available methods:
 Tutorial on my website [Rototron](https://www.rototron.info/raspberry-pi-esp32-micropython-touch-sound-tutorial/) or click picture below for a YouTube video:
 
 [![JQ6500 Tutorial](http://img.youtube.com/vi/QzOkSeeqB8g/0.jpg)](https://youtu.be/QzOkSeeqB8g)
-
-_Tested on ESP32 (Wemos Lolin32)_
