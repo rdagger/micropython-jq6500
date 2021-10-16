@@ -1,5 +1,6 @@
 """Micropython serial library for JQ6500 mini MP3 module."""
-from machine import UART
+import board
+import busio
 from time import sleep
 
 
@@ -29,15 +30,16 @@ class Player(object):
 
     READ_DELAY = .1
 
-    def __init__(self, port=2, volume=20):
+    def __init__(self, rx, tx, volume=20):
         """
         Constructor for JQ6500.
 
             Args:
-                port (int): UART port # (default: 2).
+                rx: UART RX port.
+                tx: UART TX port.
                 volume(int) : Initial volume (default: 20, range 0-30).
         """
-        self.uart = UART(port, 9600)
+        self.uart = busio.UART(tx, rx, baudrate=9600)
         self.uart.read()
         self.reset()
         self.set_volume(volume)
